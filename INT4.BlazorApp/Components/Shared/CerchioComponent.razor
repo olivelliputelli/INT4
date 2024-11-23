@@ -1,0 +1,26 @@
+﻿@rendermode InteractiveServer
+
+<h2>Cerchio</h2>
+
+Raggio <input @bind=raggio @bind:after=Reset type="number" />
+<button @onclick=Calcola>Calcola</button>
+<p>
+    Area = @area <br />
+    Circonferenza = @circonferenza
+</p>
+
+@code {
+    double raggio, area, circonferenza;
+
+    private void Reset()
+    {
+        area = 0.0;
+        circonferenza = 0.0;
+    }
+    private void Calcola()
+    {
+        Cerchio cerchio = new Cerchio(raggio);
+        area = cerchio.Area();
+        circonferenza = cerchio.Circonferenza();
+    }
+}

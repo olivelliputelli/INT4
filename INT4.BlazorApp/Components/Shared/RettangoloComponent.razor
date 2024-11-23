@@ -1,0 +1,25 @@
+﻿<h2>Rettangolo</h2>
+
+Base <input @bind=b @bind:after=Reset type="number" />
+Altezza <input @bind=h @bind:after=Reset type="number"  />
+<button @onclick=Calcola>Calcola</button>
+<p>
+    Area = @area m^2<br />
+    Perimetro = @perimetro m
+</p>
+
+@code {
+    double b, h, area, perimetro;
+
+    private void Reset()
+    {
+        area = 0.0;
+        perimetro = 0.0;
+    }
+    private void Calcola()
+    {
+        Rettangolo rettangolo = new() { Base=b, Altezza=h };
+        area = Math.Round(rettangolo.Area(), 2);
+        perimetro = Math.Round(rettangolo.Perimetro(),2);
+    }
+}

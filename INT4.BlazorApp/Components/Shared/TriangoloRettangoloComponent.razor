@@ -1,0 +1,29 @@
+﻿@rendermode InteractiveServer
+
+<h2>Triangolo Rettangolo</h2>
+
+Base
+<input @bind=b @bind:after=Reset type="number" />
+Altezza
+<input @bind=h @bind:after=Reset type="number" />
+<button @onclick=Calcola>Calcola</button>
+<p>
+    Area = @area <br />
+    Perimetro = @perimetro
+</p>
+
+@code {
+    double b, h, perimetro, area;
+
+    private void Reset()
+    {
+        area = 0.0;
+        perimetro = 0.0;
+    }
+    private void Calcola()
+    {
+        var triangolo = new TriangoloRettangolo() { Base = b, Altezza = h };
+        area = triangolo.Area();
+        perimetro = triangolo.Perimetro();
+    }
+}
