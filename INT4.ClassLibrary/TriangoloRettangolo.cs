@@ -15,7 +15,7 @@
                 @base = value;
             }
         }
-        
+
         private double altezza = 0.0;
         public double Altezza
         {
@@ -29,7 +29,7 @@
                 altezza = value;
             }
         }
-        private double Ipotenusa() => Base + Altezza;
+        private double Ipotenusa() => Math.Sqrt(Math.Pow(Base, 2) + Math.Pow(Altezza, 2));
         public double Perimetro() => Base + Altezza + Ipotenusa();
         public double Area() => Base * Altezza;
     }
