@@ -1,6 +1,4 @@
-﻿
-
-namespace INT4.ClassLibrary
+﻿namespace INT4.ClassLibrary
 {
     public class TodoItem
     {
