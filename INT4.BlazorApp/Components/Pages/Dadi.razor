@@ -1,17 +1,45 @@
 ﻿@page "/dadi"
+@rendermode InteractiveServer
 
 <h1>Dadi</h1>
 
-Casuale = @Random.Shared.Next(1, 7)
+<input @bind=numeroDadi @bind:after=Reset type="number" />
+<button @onclick="TiraDadi">Tira dadi</button>
+
+<p>
+    @foreach (var d in dadi)
+    {
+        <i class="bi bi-dice-@d.Faccia-fill m-1"
+           @onclick="() => d.IsBlocked=!d.IsBlocked"
+           style="font-size:3rem;  color: @(d.IsBlocked?"red;":"green;")"></i>
+    }
+</p>
 
 @code {
+    int numeroDadi = 1;
+    List<Dado> dadi = new();
 
-
-    void M1()
+    void Reset()
     {
-        Cerchio c1 = new Cerchio();
-        c1.Raggio = 10;
+        dadi.Clear();
     }
 
-    int n;
+    private void TiraDadi()
+    {
+        if (dadi.Count() == 0)
+        {
+            for (int i = 1; i <= numeroDadi; i++)
+            {
+                dadi.Add(new Dado());
+            }
+        }
+        else
+        {
+            foreach (var d in dadi)
+            {
+                d.TiraDado();
+            }
+        }
+
+    }
 }
