@@ -1,30 +1,39 @@
 ﻿@page "/dadi"
 @rendermode InteractiveServer
+@inject IJSRuntime JS
 
 <h1>Dadi</h1>
 
 <input @bind=numeroDadi @bind:after=Reset type="number" />
 <button @onclick="TiraDadi">Tira dadi</button>
-
-<p>
-    @foreach (var d in dadi)
-    {
-        <i class="bi bi-dice-@d.Faccia-fill m-1"
-           @onclick="() => d.IsBlocked=!d.IsBlocked"
-           style="font-size:3rem;  color: @(d.IsBlocked?"red;":"green;")"></i>
-    }
-</p>
+<div class="container text-center">
+    <div class="row">
+        <div class="col-lg-8">
+            @foreach (var d in dadi)
+            {
+                <i class="bi bi-dice-@d.Faccia-fill m-1"
+                   @onclick="() => d.IsBlocked=!d.IsBlocked"
+                   style="font-size:3rem;  color: @(d.IsBlocked?"red;":"green;")"></i>
+            }
+        </div>
+        <div class="col-lg-4" style="min-height:300px;">
+            <canvas id="dadiChart"></canvas>
+        </div>
+    </div>
+</div>
 
 @code {
     int numeroDadi = 1;
     List<Dado> dadi = new();
+    int[] frequenze = new int[6];
 
-    void Reset()
+    async Task Reset()
     {
         dadi.Clear();
+        await RenderChart();
     }
 
-    private void TiraDadi()
+    private async Task TiraDadi()
     {
         if (dadi.Count() == 0)
         {
@@ -40,6 +49,15 @@
                 d.TiraDado();
             }
         }
+        await RenderChart();
+    }
 
+    protected async Task RenderChart()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            frequenze[i] = dadi.Count(d => d.Faccia == i + 1);
+        }
+        await JS.InvokeVoidAsync("mostraIstogramma", frequenze);
     }
 }
