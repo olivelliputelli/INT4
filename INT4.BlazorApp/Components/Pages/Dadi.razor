@@ -12,8 +12,8 @@
             @foreach (var d in dadi)
             {
                 <i class="bi bi-dice-@d.Faccia-fill m-1"
-                   @onclick="() => d.IsBlocked=!d.IsBlocked"
-                   style="font-size:3rem;  color: @(d.IsBlocked?"red;":"green;")"></i>
+                @onclick="() => d.IsBlocked=!d.IsBlocked"
+                style="font-size:3rem;  color: @(d.IsBlocked?"red;":"green;")"></i>
             }
         </div>
         <div class="col-lg-4" style="min-height:300px;">
@@ -60,4 +60,5 @@
         }
         await JS.InvokeVoidAsync("mostraIstogramma", frequenze);
     }
+
 }

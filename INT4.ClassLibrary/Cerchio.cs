@@ -20,8 +20,7 @@
         {
             this.Raggio = value;
         }
-        public double Area() => Math.PI * Math.Pow(Raggio, 2);
+        public virtual double Area() => Math.PI * Math.Pow(Raggio, 2);
         public double Circonferenza() => 2 * Math.PI * Raggio;
     }
-
 }
