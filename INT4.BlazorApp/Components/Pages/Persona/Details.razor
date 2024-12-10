@@ -1,0 +1,64 @@
+﻿@page "/persone/details/{id:int}"
+
+<h1>Dettagli @Id</h1>
+
+<p>
+    Nome = @persona.Nome <br />
+    Data di nascita = @persona.DataDiNascita <br />
+</p>
+
+<img src="/img/persone/1.png" alt="Fotografia persona" />
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    Persona persona = new();
+    List<Persona> persone = new List<Persona>();
+
+    protected override void OnInitialized()
+    {
+        Persona persona1 = new Persona()
+            {
+                Id = 1,
+                Nome = "Pluto",
+                DataDiNascita = DateOnly.FromDateTime(new DateTime(2000, 1, 23)),
+                Nazionalita = Nazioni.Francia
+            };
+        Persona persona2 = new Persona()
+            {
+                Id = 2,
+                Nome = "Minny",
+                DataDiNascita = DateOnly.FromDateTime(new DateTime(2000, 1, 23)),
+                Nazionalita = Nazioni.Francia
+            };
+            persone.Add(persona1);
+            persone.Add(persona2);
+
+            persona = persone.Find(p => p.Id == Id);
+    }
+
+    public class Persona
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; } = string.Empty;
+        public DateOnly DataDiNascita { get; set; }
+        public Nazioni Nazionalita { get; set; } = Nazioni.Italia;
+
+        public int Eta()
+        {
+            DateTime oggi = DateTime.Today;
+            int eta = oggi.Year - DataDiNascita.Year;
+            if (oggi.Month < DataDiNascita.Month || (oggi.Month == DataDiNascita.Month && oggi.Day < DataDiNascita.Day))
+            {
+                eta--;
+            }
+            return eta;
+        }
+    }
+
+    public enum Nazioni
+    {
+        Italia, Francia, Germania
+    }
+}
