@@ -7,7 +7,12 @@
     Data di nascita = @persona.DataDiNascita <br />
 </p>
 
-<img src="/img/persone/1.png" alt="Fotografia persona" />
+<img class ="img-thumbnail" style="width: 200px;" src="/img/persone/@($"{Id}.png")" alt="Fotografia persona" />
+
+<p>
+    <a href="/persone">Back to List</a>
+</p>
+
 
 @code {
     [Parameter]
