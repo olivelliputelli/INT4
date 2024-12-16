@@ -1,13 +1,32 @@
 ﻿@page "/persone/details/{id:int}"
 
 <h1>Dettagli @Id</h1>
+<img class="img-thumbnail" style="width: 200px;" src="/img/persone/@($"{Id}.png")" alt="Fotografia persona" />
 
 <p>
-    Nome = @persona.Nome <br />
-    Data di nascita = @persona.DataDiNascita <br />
+    Nome = @studente.Nome <br />
+    Data di nascita = @studente.DataDiNascita  (@studente.Eta() anni)<br />
+    Teams = @studente.AccountTeams <br />
+    Frequenta la @studente.Scuola
 </p>
 
-<img class ="img-thumbnail" style="width: 200px;" src="/img/persone/@($"{Id}.png")" alt="Fotografia persona" />
+<table class="table">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Materia</th>
+            <th>Voto</th>
+        </tr>
+    </thead>
+    @foreach (var prova in studente.Prove)
+    {
+        <tr>
+            <td>@prova.DataProva</td>
+            <td>@prova.Materia</td>
+            <td>@prova.Voto</td>
+        </tr>
+    }
+</table>
 
 <p>
     <a href="/persone">Back to List</a>
@@ -18,52 +37,88 @@
     [Parameter]
     public int Id { get; set; }
 
-    Persona persona = new();
-    List<Persona> persone = new List<Persona>();
+    Studente studente = new();
+    List<Studente> studenti = new List<Studente>();
 
     protected override void OnInitialized()
     {
-        Persona persona1 = new Persona()
+        Studente std1 = new Studente()
             {
                 Id = 1,
                 Nome = "Pluto",
-                DataDiNascita = DateOnly.FromDateTime(new DateTime(2000, 1, 23)),
-                Nazionalita = Nazioni.Francia
+                DataDiNascita = DateOnly.FromDateTime(new DateTime(2007, 1, 23)),
+                Nazionalita = "Francia",
+                AccountTeams = "pluto@olivelliputelli.it",
+                Scuola = "Olivelli",
+                InseritoIl = DateTime.Now,
+                Prove = new List<Prova>(){
+                    new Prova() {
+                        DataProva= new(2024,12,16),
+                        Materia="Italiano",
+                        Voto = 4.5
+                    },
+                        new Prova() {
+                        DataProva= new(2024,12,10),
+                        Materia="Matematica",
+                        Voto = 6
+                    }
+                }
             };
-        Persona persona2 = new Persona()
+        studenti.Add(std1);
+
+        Studente std2 = new Studente()
             {
                 Id = 2,
                 Nome = "Minny",
-                DataDiNascita = DateOnly.FromDateTime(new DateTime(2000, 1, 23)),
-                Nazionalita = Nazioni.Francia
+                DataDiNascita = DateOnly.FromDateTime(new DateTime(2001, 11, 23)),
+                Nazionalita = "Italia",
+                AccountTeams = "minny@olivelliputelli.it",
+                Scuola = "Olivelli",
+                InseritoIl = DateTime.Now,
+                Prove = new List<Prova>(){
+                    new Prova() {
+                        DataProva= new(2024,12,1),
+                        Materia="Italiano",
+                        Voto = 6
+                    },
+                        new Prova() {
+                        DataProva= new(2024,1,10),
+                        Materia="Matematica",
+                        Voto = 8
+                    }
+                }
             };
-            persone.Add(persona1);
-            persone.Add(persona2);
+        studenti.Add(std2);
 
-            persona = persone.Find(p => p.Id == Id);
-    }
-
-    public class Persona
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; } = string.Empty;
-        public DateOnly DataDiNascita { get; set; }
-        public Nazioni Nazionalita { get; set; } = Nazioni.Italia;
-
-        public int Eta()
-        {
-            DateTime oggi = DateTime.Today;
-            int eta = oggi.Year - DataDiNascita.Year;
-            if (oggi.Month < DataDiNascita.Month || (oggi.Month == DataDiNascita.Month && oggi.Day < DataDiNascita.Day))
+        Studente std3 = new Studente()
             {
-                eta--;
-            }
-            return eta;
-        }
-    }
-
-    public enum Nazioni
-    {
-        Italia, Francia, Germania
+                Id = 3,
+                Nome = "paperino",
+                DataDiNascita = DateOnly.FromDateTime(new DateTime(2007, 1, 23)),
+                Nazionalita = "Italia",
+                AccountTeams = "paperino@olivelliputelli.it",
+                Scuola = "Olivelli",
+                InseritoIl = DateTime.Now,
+                Prove = new List<Prova>(){
+                    new Prova() {
+                        DataProva= new(2024,6,7),
+                        Materia="Italiano",
+                        Voto = 1
+                    },
+                        new Prova() {
+                        DataProva= new(2024,3,10),
+                        Materia="Matematica",
+                        Voto = 1
+                    }
+                    ,
+                        new Prova() {
+                        DataProva= new(2024,5,11),
+                        Materia="Matematica",
+                        Voto = 4
+                    }
+                }
+            };
+        studenti.Add(std3);
+        studente = studenti.Find(p => p.Id == Id);
     }
 }

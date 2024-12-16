@@ -2,7 +2,21 @@
 <h1>Persone</h1>
 
 <ul>
-    <li>Persona Uno <a href="persone/details/1">Details</a></li>
-    <li>Persona Due <a href="persone/details/2">Details</a></li>
+    <li>Persona Uno - <a href="persone/details/1">Details</a></li>
+    <li>Persona Due - <a href="persone/details/2">Details</a></li>
+    <li>Persona Tre - <a href="persone/details/3">Details</a></li>
 </ul>
+
+<div class="card-group">
+    @for (int i = 1; i <= 3; i++)
+    {
+        <div class="card" style="width: 18rem;">
+            <img src="/img/persone/@($"{i}.png")" class="card-img-top" alt="Testo">
+            <div class="card-body">
+                <h5 class="card-title">Persona @i</h5>
+                <a href="persone/details/@i" class="btn btn-primary">Vedi dettagli</a>
+            </div>
+        </div>
+    }
+</div>
 

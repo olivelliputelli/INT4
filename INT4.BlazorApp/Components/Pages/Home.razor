@@ -1,7 +1,36 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-@code{
+<p>Oggi: @oggi.ToLongDateString()</p>
 
+<p>
+    Nato il <input @bind=dataDiNascita type="date" />
+
+    <button @onclick=Calcola>Calcola</button>
+    Età = @eta
+</p>
+
+
+@code {
+    DateTime dataDiNascita;
+    DateTime oggi = DateTime.Today;
+    int eta;
+
+    private void Calcola()
+    {
+        CA c = new CA();
+        Console.WriteLine(c);
+
+        eta = oggi.Year - dataDiNascita.Year;
+        if (oggi.AddYears(-eta) < dataDiNascita) eta--;
+    }
+
+    class CA {
+        public override string ToString()
+        {
+            return "Ciao da c";
+        }
+    }
 }
