@@ -4,7 +4,7 @@
 
 <h1>Dadi</h1>
 
-<input @bind=numeroDadi @bind:after=Reset type="number" />
+<input @bind=numeroDadi max="1000" @bind:after=Reset type="number" />
 <button @onclick="TiraDadi">Tira dadi</button>
 <div class="container text-center">
     <div class="row">
@@ -35,6 +35,12 @@
 
     private async Task TiraDadi()
     {
+        if (numeroDadi > 100)
+        {
+            numeroDadi = 0;
+            return;
+        }
+
         if (dadi.Count() == 0)
         {
             for (int i = 1; i <= numeroDadi; i++)
@@ -60,5 +66,4 @@
         }
         await JS.InvokeVoidAsync("mostraIstogramma", frequenze);
     }
-
 }

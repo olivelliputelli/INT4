@@ -7,7 +7,8 @@
     Nome = @studente.Nome <br />
     Data di nascita = @studente.DataDiNascita  (@studente.Eta() anni)<br />
     Teams = @studente.AccountTeams <br />
-    Frequenta la @studente.Scuola
+    Frequenta la @studente.Scuola <br />
+    Inserito il @studente.InseritoIl
 </p>
 
 <table class="table">
@@ -46,12 +47,17 @@
             {
                 Id = 1,
                 Nome = "Pluto",
-                DataDiNascita = DateOnly.FromDateTime(new DateTime(2007, 1, 23)),
+                DataDiNascita = new DateOnly(2007, 1, 23),
                 Nazionalita = "Francia",
                 AccountTeams = "pluto@olivelliputelli.it",
                 Scuola = "Olivelli",
                 InseritoIl = DateTime.Now,
                 Prove = new List<Prova>(){
+                                 new Prova() {
+                        DataProva= new(2024,5,1),
+                        Materia="Informatica",
+                        Voto = 9.5
+                    },
                     new Prova() {
                         DataProva= new(2024,12,16),
                         Materia="Italiano",

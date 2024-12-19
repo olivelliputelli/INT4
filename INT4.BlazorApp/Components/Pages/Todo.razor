@@ -1,7 +1,54 @@
 ﻿@page "/todo"
+@rendermode InteractiveServer
 
-<h3>Todo</h3>
+<PageTitle>Todo</PageTitle>
+
+<h1>Todo (@todos.Count(todo => !todo.IsDone))</h1>
+
+<input @bind=nuovoTodo placeholder="Qualcosa da fare" />
+<button @onclick="AddTodo">Add todo</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Svolto</th>
+            <th>Titolo</th>
+            <th>Inserito Il</th>
+            <th>Ultima Modifica</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var todo in todos)
+        {
+            <tr>
+                <td><input type="checkbox" @bind=todo.IsDone /></td>
+                <td>
+                    <input @bind=todo.Titolo @bind:event="oninput"
+                           @onchange="() => todo.UltimaModifica=DateTime.Now" />
+                </td>
+                <td>@todo.InseritoIl</td>
+                <td>@todo.UltimaModifica</td>
+                <td>
+                    <button @onclick="() =>todos.Remove(todo)">Elimina</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
 
 @code {
+    private string nuovoTodo = string.Empty;
+    private List<TodoItem> todos = new();
 
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(nuovoTodo))
+        {
+            todos.Add(new TodoItem { Titolo = nuovoTodo });
+            nuovoTodo = string.Empty;
+        }
+    }
 }
