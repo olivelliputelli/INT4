@@ -6,13 +6,18 @@
 <h1>Todo (@todos.Count(todo => !todo.IsDone))</h1>
 
 <input @bind=nuovoTodo placeholder="Qualcosa da fare" />
+<input @bind=budget placeholder="Preventivo" />
 <button @onclick="AddTodo">Add todo</button>
 
 <table class="table">
+    <caption>
+        @($"Totale = {todos.Where(t => t.IsDone).Sum(tt => tt.Budget):C2} / {todos.Sum(t => t.Budget):C2}")
+    </caption>
     <thead>
         <tr>
             <th>Svolto</th>
             <th>Titolo</th>
+            <th>Preventivo</th>
             <th>Inserito Il</th>
             <th>Ultima Modifica</th>
             <th>Azioni</th>
@@ -25,8 +30,9 @@
                 <td><input type="checkbox" @bind=todo.IsDone /></td>
                 <td>
                     <input @bind=todo.Titolo @bind:event="oninput"
-                           @onchange="() => todo.UltimaModifica=DateTime.Now" />
+                    @onchange="() => todo.UltimaModifica=DateTime.Now" />
                 </td>
+                <td>@($"{todo.Budget:C2}")</td>
                 <td>@todo.InseritoIl</td>
                 <td>@todo.UltimaModifica</td>
                 <td>
@@ -41,14 +47,16 @@
 
 @code {
     private string nuovoTodo = string.Empty;
+    private decimal budget = 0.0m;
     private List<TodoItem> todos = new();
 
     private void AddTodo()
     {
         if (!string.IsNullOrWhiteSpace(nuovoTodo))
         {
-            todos.Add(new TodoItem { Titolo = nuovoTodo });
+            todos.Add(new TodoItem { Titolo = nuovoTodo, Budget = budget });
             nuovoTodo = string.Empty;
+            budget = 0.0m;
         }
     }
 }
