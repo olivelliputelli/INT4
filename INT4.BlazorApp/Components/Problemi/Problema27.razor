@@ -1,0 +1,21 @@
+﻿@rendermode InteractiveServer
+
+<h2>Problema 27</h2>
+<p>
+    Nome <input @bind=utente.Nome /> <br />
+    Cognome <input @bind=utente.Cognome /> <br />
+    Nato il <input @bind=utente.DataDiNascita type="date" />
+</p>
+@if (string.IsNullOrEmpty(utente.Cognome) || string.IsNullOrEmpty(utente.Nome))
+{
+    <p>Compila i campi</p>
+}
+else
+{
+    <p>@($"Ciao {utente.Nome.ToUpper()} {utente.Cognome.ToUpper()} hai {utente.Eta()} anni, i prossimi li fai tra {utente.TempoProssimoCompleanno().Days} giorni e {utente.TempoProssimoCompleanno().Hours} ore.")</p>
+}
+
+@code {
+    Utente utente = new Utente();
+    int eta;
+}
