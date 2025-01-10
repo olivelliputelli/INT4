@@ -2,8 +2,9 @@
 
 namespace INT4.ClassLibrary
 {
-    public abstract class FiguraGeometrica
+    interface IFiguraGeometrica
     {
-        public abstract double Area();
+        double Area();
+        double Perimetro();
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace INT4.ClassLibrary
 {
-    public class TriangoloRettangolo
+    public class TriangoloRettangolo : IFiguraGeometrica
     {
         private double @base = 0.0;
         public double Base

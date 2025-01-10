@@ -1,6 +1,6 @@
 ﻿namespace INT4.ClassLibrary
 {
-    public class Cerchio : FiguraGeometrica
+    public class Cerchio : IFiguraGeometrica
     {
         private double raggio = 0.0;
         public double Raggio
@@ -20,7 +20,8 @@
         {
             this.Raggio = value;
         }
-        public override double Area() => Math.PI * Math.Pow(Raggio, 2);
+        public double Area() => Math.PI * Math.Pow(Raggio, 2);
         public double Circonferenza() => 2 * Math.PI * Raggio;
+        public double Perimetro() => Circonferenza();
     }
 }

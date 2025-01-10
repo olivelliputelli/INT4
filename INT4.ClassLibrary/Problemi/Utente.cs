@@ -12,7 +12,7 @@ public class Utente
     }
     public TimeSpan TempoProssimoCompleanno()
     {
-        
-        return DateTime.Now - DataDiNascita.AddYears(Eta()).ToDateTime(new TimeOnly());
+        return DataDiNascita.ToDateTime(new TimeOnly()).AddYears(Eta()+1)
+            - DateTime.Today;
     }
 }

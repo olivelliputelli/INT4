@@ -1,6 +1,6 @@
 ﻿namespace INT4.ClassLibrary
 {
-    public class Rettangolo
+    public class Rettangolo : IFiguraGeometrica
     {
         public double Base { get; set; } = 0.0;
         public double Altezza { get; set; } = 0.0;
