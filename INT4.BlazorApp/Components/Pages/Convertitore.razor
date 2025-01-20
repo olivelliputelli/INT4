@@ -1,0 +1,29 @@
+﻿@page "/convertitore"
+@inject IJSRuntime JS
+@using System.IO
+@rendermode InteractiveServer
+
+<h1>Convertitore <span @onclick=Imposta>(1 $ = @dollaroEuro €)</span></h1>
+
+<input @bind=dollari />
+<p>
+    @dollari $ = @(dollaroEuro * dollari) €
+</p>
+
+@code {
+    decimal dollaroEuro, dollari;
+
+    protected override void OnInitialized()
+    {
+        if (!File.Exists("doleur.txt"))
+            File.WriteAllText("doleur.txt", "0,97");
+        dollaroEuro = decimal.Parse(File.ReadAllText("doleur.txt"));
+    }
+
+    private async Task Imposta()
+    {
+        string numero = await JS.InvokeAsync<string>("prompt", "Per favore, inserisci valore di 1 $:"); 
+        File.WriteAllText("doleur.txt", numero);
+        dollaroEuro = decimal.Parse(File.ReadAllText("doleur.txt"));
+    }
+}

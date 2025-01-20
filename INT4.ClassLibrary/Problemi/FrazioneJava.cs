@@ -158,7 +158,6 @@
             return risultato;
         }
 
-
         public override String ToString()
         {
             return numeratore + "/" + denominatore;

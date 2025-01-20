@@ -1,0 +1,33 @@
+﻿@page "/fatture"
+@using System.IO
+@rendermode InteractiveServer
+
+<h1>Fatture</h1>
+<button @onclick=Reset>Reset</button>
+<button @onclick=ProssimaFattura>Prossima fattura</button>
+<p>
+    Numero prossima fattura: @numeroFattura
+</p>
+
+@code {
+    int numeroFattura;
+
+    protected override void OnInitialized()
+    {
+        if (!File.Exists("fattura.txt"))
+            File.WriteAllText("fattura.txt", "1");
+        numeroFattura = int.Parse(File.ReadAllText("fattura.txt"));
+    }
+
+    private void ProssimaFattura()
+    {
+        numeroFattura = int.Parse(File.ReadAllText("fattura.txt"));
+        numeroFattura++;
+        File.WriteAllText("fattura.txt", numeroFattura.ToString());
+    }
+    private void Reset()
+    {
+        File.WriteAllText("fattura.txt", "1");
+        numeroFattura = int.Parse(File.ReadAllText("fattura.txt"));
+    }
+}

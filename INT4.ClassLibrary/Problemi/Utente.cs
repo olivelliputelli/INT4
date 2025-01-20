@@ -10,9 +10,9 @@ public class Utente
         if (DateOnly.FromDateTime(DateTime.Now.AddYears(-eta)) < DataDiNascita) eta--;
         return eta;
     }
-    public TimeSpan TempoProssimoCompleanno()
+    public int GiorniProssimoCompleanno()
     {
-        return DataDiNascita.ToDateTime(new TimeOnly()).AddYears(Eta()+1)
-            - DateTime.Today;
+        return (DataDiNascita.ToDateTime(new TimeOnly()).AddYears(Eta() + 1)
+            - DateTime.Today).Days;
     }
 }

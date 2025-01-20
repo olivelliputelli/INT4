@@ -1,4 +1,6 @@
 ﻿
+
+
 window.mostraIstogramma = (frequenze) => {
     const ctx = document.getElementById("dadiChart");
 

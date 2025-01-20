@@ -1,5 +1,28 @@
-﻿<h2>Problema 28</h2>
+﻿@rendermode InteractiveServer
+
+<h2>Problema 28</h2>
+
+<input @bind=f1n /> /
+<input @bind=f1d />
++
+<input @bind=f2n /> /
+<input @bind=f2d />
+<button @onclick=Calcola>Calcola</button>
+<p>@output</p>
 
 @code {
+    int f1n, f1d, f2n, f2d;
+    MarkupString output;
+    Frazione f1;
+    Frazione f2;
 
+    private void Calcola()
+    {
+        f1 = new Frazione(f1n, f1d);
+        f2 = new Frazione(f2n, f2d);
+        string outp = $"{f1} + {f2} = {f1 + f2} <br>";
+        outp += $"{f1} - {f2} = {f1 - f2}";
+
+        output = new MarkupString(outp);
+    }
 }

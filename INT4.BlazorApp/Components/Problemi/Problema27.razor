@@ -12,7 +12,7 @@
 }
 else
 {
-    <p>@($"Ciao {utente.Nome.ToUpper()} {utente.Cognome.ToUpper()} hai {utente.Eta()} anni, i prossimi li fai tra {utente.TempoProssimoCompleanno().Days} giorni e {utente.TempoProssimoCompleanno().Hours} ore.")</p>
+    <p>@($"Ciao {utente.Nome.ToUpper()} {utente.Cognome.ToUpper()} hai {utente.Eta()} anni, i prossimi li fai tra {utente.GiorniProssimoCompleanno()} giorni.")</p>
 }
 
 @code {
