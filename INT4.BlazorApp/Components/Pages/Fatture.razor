@@ -16,6 +16,7 @@
     {
         if (!File.Exists("fattura.txt"))
             File.WriteAllText("fattura.txt", "1");
+
         numeroFattura = int.Parse(File.ReadAllText("fattura.txt"));
     }
 

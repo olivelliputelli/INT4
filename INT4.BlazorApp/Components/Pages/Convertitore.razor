@@ -3,27 +3,66 @@
 @using System.IO
 @rendermode InteractiveServer
 
-<h1>Convertitore <span @onclick=Imposta>(1 $ = @dollaroEuro €)</span></h1>
+<h1>
+    Convertitore
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        1 $ = @dollaroEuro €
+    </button>
+</h1>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Valore di conversione</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
+                <div class="input-group mb-3">
+                    <span class="input-group-text">€</span>
+                    <input @bind=conversione type="text" class="form-control">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" @onclick=Imposta class="btn btn-primary" data-bs-dismiss="modal">Salva modifiche</button>
+            </div>
+        </div>
+    </div>
+</div>
 <input @bind=dollari />
 <p>
     @dollari $ = @(dollaroEuro * dollari) €
 </p>
 
 @code {
+    string conversione = string.Empty;
     decimal dollaroEuro, dollari;
 
     protected override void OnInitialized()
     {
         if (!File.Exists("doleur.txt"))
-            File.WriteAllText("doleur.txt", "0,97");
+            File.WriteAllText("doleur.txt", "1");
         dollaroEuro = decimal.Parse(File.ReadAllText("doleur.txt"));
     }
 
     private async Task Imposta()
     {
-        string numero = await JS.InvokeAsync<string>("prompt", "Per favore, inserisci valore di 1 $:"); 
-        File.WriteAllText("doleur.txt", numero);
-        dollaroEuro = decimal.Parse(File.ReadAllText("doleur.txt"));
+        try
+        {
+            dollaroEuro = decimal.Parse(conversione);
+        }
+        catch (Exception e)
+        {
+            await JS.InvokeVoidAsync("alert", $"Errore!!! - {e.Message}");
+            dollaroEuro = 1m;
+        }
+        finally
+        {
+            File.WriteAllText("doleur.txt", dollaroEuro.ToString());
+        }
     }
 }
